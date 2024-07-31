@@ -23,6 +23,10 @@ const Customizer = () => {
     stylishShirt: false
   });
 
+  useEffect(() => {
+    state.activeEditorTab = activeEditorTab;
+  }, [activeEditorTab]);
+
   const handleActiveFilterTab = (tabName) => {
     switch (tabName) {
         case 'logoShirt':
@@ -85,8 +89,6 @@ const Customizer = () => {
 
       const data = await response.json();
 
-      console.log(data);
-
       handleDecals(type, `data:image/png;base64,${data.photo}`);
     } catch (error) {
       alert(error.message || 'Something went wrong');
@@ -98,6 +100,8 @@ const Customizer = () => {
 
   // show tab content depeding on the active tab
   const generateTabContent = () => {
+    state.activeEditorTab = activeEditorTab;
+
     switch (activeEditorTab) {
         case 'colorpicker':
             return <ColorPicker />
@@ -105,6 +109,7 @@ const Customizer = () => {
             return <FilePicker file={file} setFile={setFile} readFile={readFile} />
         case 'aipicker':
             return <AIPicker prompt={prompt} setPrompt={setPrompt} generatingImage={generatingImg} handleSubmit={handleSubmit} />
+        case 'locationmover':
         default:
             return null;
     }
@@ -129,7 +134,10 @@ const Customizer = () => {
                     <CustomButton 
                       type='filled'
                       title='Go Back'
-                      handleClick={() => state.intro = true}
+                      handleClick={() => {
+                        state.intro = true;
+                        setActiveEditorTab('');
+                      }}
                       customStyles='w-fit px-4 py-2.5 font-bold text-sm'
                     />
                 </motion.div>
