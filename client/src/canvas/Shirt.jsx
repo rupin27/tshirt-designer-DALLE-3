@@ -78,7 +78,7 @@ const Shirt = () => {
           <Decal
             position={decalPosition}
             rotation={[0, 0, 0]}
-            scale={0.15}
+            scale={state.decalScale}
             map={logoTexture}
             mapAnisotropy={16}
             depthTest={false}
