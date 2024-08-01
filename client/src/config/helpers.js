@@ -10,6 +10,15 @@ export const downloadCanvasToImage = () => {
   document.body.removeChild(link);
 };
 
+export const downloadDecalImage = (decalUrl) => {
+  const link = document.createElement("a");
+  link.href = decalUrl;
+  link.download = "decal.png";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
 export const reader = (file) =>
   new Promise((resolve, reject) => {
     const fileReader = new FileReader();

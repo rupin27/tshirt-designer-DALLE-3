@@ -5,5 +5,6 @@ import FilePicker from "./FilePicker";
 import Tab from "./Tab";
 import SizePicker from "./SizePicker";
 import TextPicker from "./TextPicker";
+import DownloadButton from "./DownloadButton";
 
-export { CustomButton, AIPicker, ColorPicker, FilePicker, Tab, SizePicker, TextPicker };
+export { CustomButton, AIPicker, ColorPicker, FilePicker, Tab, SizePicker, TextPicker, DownloadButton };

@@ -12,7 +12,7 @@ const state = proxy({
     decalScale: 0.15,
     textScale: 0.04,
     textInput: null,
-    textMaxWidth: 1,
+    textMaxWidth: 6,
     textLineHeight: 1.2
 })
 
