@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import * as THREE from 'three';
 import { easing } from 'maath';
 import { useSnapshot } from 'valtio';
-import { useFrame, extend, useThree } from '@react-three/fiber';
-import { Decal, useGLTF, useTexture } from '@react-three/drei';
+import { useFrame, useThree } from '@react-three/fiber';
+import { Decal, Text, useGLTF, useTexture } from '@react-three/drei';
 
 import state from '../store';
 
@@ -14,27 +14,36 @@ const Shirt = () => {
   const fullTexture = useTexture(snap.fullDecal);
   const stateString = JSON.stringify(snap);
 
-  const [decalPosition, setDecalPosition] = useState([0, 0.04, 0.15]);
-  const [isDragging, setIsDragging] = useState(false);
+  const [decalPosition, setDecalPosition] = useState([0, 0.06, 0.15]);
+  const [textPosition, setTextPosition] = useState([0, 0.06, 0.145]);
+  const [isDecalDragging, setIsDecalDragging] = useState(false);
+  const [isTextDragging, setIsTextDragging] = useState(false);
 
-  const { camera, scene } = useThree();
+  const { camera } = useThree();
   const raycaster = useRef(new THREE.Raycaster());
   const mouse = useRef(new THREE.Vector2());
 
   const meshRef = useRef();
 
-  const handleMouseDown = () => {
+  const handleMouseDown = (event) => {
     if (state.activeEditorTab === 'locationmover') {
-      setIsDragging(true);
+      if (snap.isLogoTexture) {
+        setIsDecalDragging(true);
+      }
+    } else if (state.activeEditorTab === 'textinput') {
+      if (snap.textInput) {
+        setIsTextDragging(true);
+      }
     }
   };
 
   const handleMouseUp = () => {
-    setIsDragging(false);
+    setIsDecalDragging(false);
+    setIsTextDragging(false);
   };
 
   const handleMouseMove = (event) => {
-    if (!isDragging || state.activeEditorTab !== 'locationmover') return;
+    if (!isDecalDragging && !isTextDragging) return;
 
     const { clientX, clientY } = event;
     mouse.current.x = (clientX / window.innerWidth) * 2 - 1;
@@ -45,7 +54,12 @@ const Shirt = () => {
 
     if (intersects.length > 0) {
       const intersection = intersects[0].point;
-      setDecalPosition([intersection.x, intersection.y, intersection.z]);
+      if (isDecalDragging) {
+        setDecalPosition([intersection.x, intersection.y, intersection.z]);
+      }
+      if (isTextDragging) {
+        setTextPosition([intersection.x, intersection.y, textPosition[2]]);
+      }
     }
   };
 
@@ -84,6 +98,20 @@ const Shirt = () => {
             depthTest={false}
             depthWrite={true}
           />
+        )}
+        {snap.textInput && (
+          <Text
+            position={textPosition}
+            rotation={[0, 0, 0]}
+            scale={state.textScale}
+            color={state.textColor}
+            anchorX="center"
+            anchorY="middle"
+            maxWidth={state.textMaxWidth}
+            lineHeight={state.textLineHeight}
+          >
+            {snap.textInput}
+          </Text>
         )}
       </mesh>
     </group>

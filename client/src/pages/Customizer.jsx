@@ -9,7 +9,7 @@ import { downloadCanvasToImage, reader } from '../config/helpers';
 import { EditorTabs, FilterTabs, DecalTypes } from '../config/constants';
 import { fadeAnimation, slideAnimation } from '../config/motion';
 
-import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab, SizePicker } from '../components';
+import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab, SizePicker, TextPicker } from '../components';
 
 const Customizer = () => {
   const snap = useSnapshot(state);
@@ -111,6 +111,8 @@ const Customizer = () => {
             return <AIPicker prompt={prompt} setPrompt={setPrompt} generatingImage={generatingImg} handleSubmit={handleSubmit} />
         case 'locationmover':
           return <SizePicker />
+        case 'textinput':
+          return <TextPicker />  
         default:
             return null;
     }

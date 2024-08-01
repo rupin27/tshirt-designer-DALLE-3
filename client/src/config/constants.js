@@ -1,4 +1,4 @@
-import { swatch, fileIcon, ai, logoShirt, stylishShirt, arrows } from "../assets";
+import { swatch, fileIcon, ai, logoShirt, stylishShirt, arrows, textboxedit } from "../assets";
 
 export const EditorTabs = [
   {
@@ -16,6 +16,10 @@ export const EditorTabs = [
   {
     name: "locationmover",
     icon: arrows,
+  },
+  {
+    name: "textinput",
+    icon: textboxedit,
   },
 ];
 
