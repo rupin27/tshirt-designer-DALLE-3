@@ -109,6 +109,7 @@ const Shirt = () => {
             anchorY="middle"
             maxWidth={state.textMaxWidth}
             lineHeight={state.textLineHeight}
+            depthWrite={true}
           >
             {snap.textInput}
           </Text>
